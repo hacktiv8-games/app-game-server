@@ -41,6 +41,10 @@ io.on("connection", socket => {
     io.emit('clientWord', payload)
   })
 
+  socket.on('setScore', (payload) => {
+    io.emit('clientScore', payload)
+  })
+
 });
 
 httpServer.listen(port, () => console.log(`app run on ${port}`));
