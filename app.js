@@ -37,12 +37,19 @@ io.on("connection", socket => {
     io.emit('clientJoin', payload.username)
   })
 
-  socket.on('createWord', (payload) => {
-    io.emit('clientWord', payload)
+  socket.on('createWord', (payload, room) => {
+    if (!room) socket.broadcast.emit('clientWord', payload)
+    else socket.to(room).emit('clientWord', payload)
   })
 
-  socket.on('setScore', (payload) => {
-    io.emit('clientScore', payload)
+  socket.on('setScore', (payload, room) => {
+    if (!room) socket.broadcast.emit('clientScore', payload)
+    else socket.to(room).emit('clientScore', payload)
+  })
+
+  socket.on('serverTimer', (payload, room) => {
+    if (!room) socket.broadcast.emit('clientTimer', payload)
+    else socket.to(room).emit('clientTimer', payload)
   })
 
 });
